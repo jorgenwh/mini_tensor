@@ -1,28 +1,24 @@
 import numpy as np
 import cupy as cp
 
+from .dtypes import SUPPORTED_DTYPES
+
 
 class Tensor():
     def __init__(self, data):
         if not isinstance(data, (np.ndarray, cp.ndarray)):
             raise ValueError("data must be a numpy or cupy array")
+        if data.dtype not in SUPPORTED_DTYPES:
+            raise ValueError(f"unsupported dtype - only {SUPPORTED_DTYPES} are supported")
         self._data = data
 
     @property
     def device(self):
-        if isinstance(self._data, np.ndarray):
-            return "cpu"
-        else:
-            return "cuda"
+        return "cpu" if isinstance(self._data, np.ndarray) else "cuda"
 
     @device.setter
     def device(self, new_device):
-        if new_device == "cpu":
-            self._data = cp.asnumpy(self._data)
-        elif new_device == "cuda":
-            self._data = cp.asarray(self._data)
-        else:
-            raise ValueError(f"unknown device: {new_device}")
+        raise ValueError("cannot change device of tensor")
 
     @property
     def dtype(self):
@@ -30,8 +26,8 @@ class Tensor():
 
     @dtype.setter
     def dtype(self, new_dtype):
-        if new_dtype != np.float32:
-            raise ValueError("only float32 is currently supported")
+        if new_dtype not in SUPPORTED_DTYPES:
+            raise ValueError(f"unsupported dtype - only {SUPPORTED_DTYPES} are supported")
         self._data = self._data.astype(new_dtype)
 
     @property
@@ -47,6 +43,30 @@ class Tensor():
     @property
     def size(self):
         return self._data.size
+
+    def reshape(self, *new_shape):
+        self.shape = new_shape
+        return self
+
+    def ravel(self):
+        return Tensor(self._data.ravel())
+
+    def to_cpu(self):
+        if self.device == "cpu": return self
+        return Tensor(cp.asnumpy(self._data))
+
+    def to_cuda(self):
+        if self.device == "cuda": return self
+        return Tensor(cp.asarray(self._data))
+
+    def __getitem__(self, index):
+        index = index._data if isinstance(index, Tensor) else index
+        return Tensor(self._data[index])
+
+    def __setitem__(self, index, value):
+        index = index._data if isinstance(index, Tensor) else index
+        value = value._data if isinstance(value, Tensor) else value
+        self._data[index] = value
 
     def __str__(self):
         return str(self._data)

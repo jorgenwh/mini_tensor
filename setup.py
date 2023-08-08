@@ -81,7 +81,10 @@ setup(
     description="",
     long_description="",
     packages=["minitensor"],
-    ext_modules=[CMakeExtension("minitensor_C")],
+    ext_modules=[
+        CMakeExtension(name="minitensor_cuda"),
+        CMakeExtension(name="minitensor_cudnn")
+    ],
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
 )

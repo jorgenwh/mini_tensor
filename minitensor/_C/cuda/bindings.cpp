@@ -7,6 +7,6 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(minitensor_C, m) {
-  m.doc() = "Doc for the minitensor_C module ...";
+PYBIND11_MODULE(minitensor_cuda, m) {
+  m.doc() = "minitensor_cuda module";
 }

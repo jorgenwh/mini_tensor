@@ -1,5 +1,3 @@
-import numpy as _np
-
 from .initializers import zeros, arange
-
-float32 = _np.float32
+from .dtypes import float32
+from .device import to_cpu, to_cuda
