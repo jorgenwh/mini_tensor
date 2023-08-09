@@ -15,5 +15,6 @@ if(${CUDNN_ERROR_CHECK} MATCHES "True")
   add_compile_definitions(__CUDNN_ERROR_CHECK__)
 endif()
 
+add_subdirectory("minitensor/_C/cpp")
 add_subdirectory("minitensor/_C/cuda")
 add_subdirectory("minitensor/_C/cudnn")

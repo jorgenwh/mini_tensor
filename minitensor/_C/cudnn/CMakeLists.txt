@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
 project(minitensor_cudnn LANGUAGES CXX CUDA)
 
-set(SOURCE_DIR ".")
-include_directories(${SOURCE_DIR})
-
 set(SOURCES 
-  #"${SOURCE_DIR}/kernels.cu"
+  "cudnn_handle_wrapper.cu"
+  "ops.cu"
 )
 
-pybind11_add_module(${PROJECT_NAME} ${SOURCES} "${SOURCE_DIR}/bindings.cpp")
-#target_link_libraries(${PROJECT_NAME} PUBLIC -lcudnn)
+#include_directories(/usr/local/cuda-11.7/include)
+
+pybind11_add_module(${PROJECT_NAME} ${SOURCES} "bindings.cpp")
+target_link_libraries(${PROJECT_NAME} PUBLIC -lcudnn)

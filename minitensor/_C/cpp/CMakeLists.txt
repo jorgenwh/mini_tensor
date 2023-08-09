@@ -1,9 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
-project(minitensor_cuda LANGUAGES CXX CUDA)
+project(minitensor_cpp LANGUAGES CXX)
 
 set(SOURCES 
-  "kernels.cu"
-  "ops.cu"
+  "ops.cpp"
 )
 
 pybind11_add_module(${PROJECT_NAME} ${SOURCES} "bindings.cpp")

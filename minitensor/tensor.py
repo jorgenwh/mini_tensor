@@ -59,6 +59,14 @@ class Tensor():
         if self.device == "cuda": return self
         return Tensor(cp.asarray(self._data))
 
+    def to_numpy(self):
+        if self.device == "cpu": return self._data.copy()
+        else: return cp.asnumpy(self._data)
+
+    def to_cupy(self):
+        if self.device == "cpu": return cp.asarray(self._data)
+        else: return self._data.copy()
+
     def __getitem__(self, index):
         index = index._data if isinstance(index, Tensor) else index
         return Tensor(self._data[index])
