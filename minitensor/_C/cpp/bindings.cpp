@@ -18,6 +18,15 @@ PYBIND11_MODULE(minitensor_cpp, m) {
     return out;
   });
 
+  m.def("relu", [](py::array_t<float> &in) {
+    const int size = in.size();
+    const float *in_buffer = in.data();
+    auto out = py::array_t<float>(size);
+    float *out_buffer = out.mutable_data();
+    ops::relu(in_buffer, out_buffer, size);
+    return out;
+  });
+
   m.def("sum", [](py::array_t<float> &in) {
     const int size = in.size();
     const float *in_buffer = in.data();

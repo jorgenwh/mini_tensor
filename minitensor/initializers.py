@@ -12,8 +12,7 @@ def arange(start, stop, step, dtype=np.float32):
 def randn(shape, dtype=np.float32):
     return Tensor(np.random.randn(*shape).astype(dtype))
 
-def from_numpy(numpy_array):
-    return Tensor(numpy_array.copy())
-
-def from_cupy(cupy_array):
-    return Tensor(cupy_array.copy())
+def from_xp(array):
+    if not isinstance(array, (np.ndarray, cp.ndarray)):
+        raise ValueError("array must be numpy.ndarray or cupy.ndarray")
+    return Tensor(array.copy())

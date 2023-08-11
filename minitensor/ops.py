@@ -17,6 +17,14 @@ def exp(tensor):
         minitensor_cuda.exp(tensor._data.data.ptr, res.data.ptr, res.size)
         return Tensor(res)
 
+def relu(tensor):
+    if tensor.device == "cpu":
+        return Tensor(minitensor_cpp.relu(tensor._data))
+    else:
+        res = cp.empty_like(tensor._data)
+        minitensor_cuda.relu(tensor._data.data.ptr, res.data.ptr, res.size)
+        return Tensor(res)
+
 def sum(tensor):
     if tensor.device == "cpu":
         return minitensor_cpp.sum(tensor._data)

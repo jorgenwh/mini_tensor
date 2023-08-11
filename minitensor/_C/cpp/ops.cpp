@@ -9,6 +9,12 @@ void exp(const float *in, float *out, const int size) {
   }
 }
 
+void relu(const float *in, float *out, const int size) {
+  for (int i = 0; i < size; i++) {
+    out[i] = (in[i] > 0.0f) ? in[i] : 0.0f;
+  }
+}
+
 float sum(const float *in, const int size) {
   float s = 0.0f;
   for (int i = 0; i < size; i++) {

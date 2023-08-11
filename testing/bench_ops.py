@@ -4,6 +4,8 @@ import numpy as np
 import cupy as cp
 import minitensor as mt
 
+from .xp_ops import np_relu, cp_relu
+
 def benchmark_op(op, input_arr, n_iter=100, n_warmup=10):
     # warmup
     for _ in range(n_warmup):
@@ -39,7 +41,8 @@ if __name__ == "__main__":
             ("mt.exp", "np.exp", mt.exp, np.exp, "cpu"),
             ("mt.exp", "cp.exp", mt.exp, cp.exp, "cuda"),
             ("mt.sum", "np.sum", mt.sum, np.sum, "cpu"),
-            ("mt.sum", "np.sum", mt.sum, cp.sum, "cuda")
+            ("mt.relu", "np_relu", mt.relu, np_relu, "cpu"),
+            ("mt.relu", "cp_relu", mt.relu, cp_relu, "cuda")
     ]:
         for shape in [(10, 10), (100, 100), (1000, 1000), (2500, 2500)]:
             for dtype in [np.float32]:

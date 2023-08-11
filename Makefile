@@ -1,4 +1,4 @@
-.PHONY: all install-deps install dev-install uninstall clean
+.PHONY: all install-deps install dev-install uninstall test clean
 
 all: install-deps install
 
@@ -16,6 +16,9 @@ uninstall: clean
 	$(RM) minitensor_cpp.cpython-39-x86_64-linux-gnu.so
 	$(RM) minitensor_cuda.cpython-39-x86_64-linux-gnu.so
 	$(RM) minitensor_cudnn.cpython-39-x86_64-linux-gnu.so
+
+test:
+	python -m pytest
 
 clean:
 	$(RM) -rf build minitensor.egg-info

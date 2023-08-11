@@ -5,6 +5,7 @@
 
 namespace ops {
 
-float sum(const float *in, const int size, cudnnHandle_t handle);
+float relu(const float *in, float *out, const int size, const cudnnHandle_t &handle);
+float sum(const float *in, const int size, const cudnnHandle_t &handle);
 
 } // namespace ops

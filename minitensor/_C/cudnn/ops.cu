@@ -6,7 +6,11 @@
 
 namespace ops {
 
-float sum(const float *in, const int size, cudnnHandle_t cudnn_handle) {
+float relu(const float *in, float *out, const int size, const cudnnHandle_t &handle) {
+  ;
+}
+
+float sum(const float *in, const int size, const cudnnHandle_t &cudnn_handle) {
   cudnnTensorDescriptor_t in_desc, out_desc;
   CUDNN_CHECK(cudnnCreateTensorDescriptor(&in_desc));
   CUDNN_CHECK(cudnnCreateTensorDescriptor(&out_desc));
